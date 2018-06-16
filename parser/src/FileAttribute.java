@@ -10,7 +10,7 @@ import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 public class FileAttribute {
     public static void main(String[] args) {
         BasicFileAttributes attrb = null;
-        Path path = Paths.get("src/test.txt");
+        Path path = Paths.get("C:\\Users\\oonja\\Desktop\\File_attribute_parser\\parser\\src\\test.txt");
 
         try {
             attrb = Files.readAttributes(path, BasicFileAttributes.class);
