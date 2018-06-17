@@ -1,3 +1,6 @@
+import java.io.File;
+import java.util.Scanner;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,10 +10,12 @@ import java.nio.file.attribute.FileTime;
 
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 
-public class FileAttribute {
+public class File_Manage_Main {
     public static void main(String[] args) {
+        //File mfile = new File("C:\\Users\\oonja\\Desktop\\File_Management_System\\File_Management\\src\\test.txt");
         BasicFileAttributes attrb = null;
-        Path path = Paths.get("C:\\Users\\oonja\\Desktop\\File_attribute_parser\\parser\\src\\test.txt");
+        String p;
+        Path path = Paths.get("C:\\Users\\oonja\\Desktop\\File_Management_System\\File_Management\\src\\test.txt");
 
         try {
             attrb = Files.readAttributes(path, BasicFileAttributes.class);
@@ -68,7 +73,5 @@ public class FileAttribute {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
     }
 }
