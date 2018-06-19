@@ -1,8 +1,8 @@
-import java.io.File;
-import java.util.Scanner;
+package file_manage;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -10,13 +10,11 @@ import java.nio.file.attribute.FileTime;
 
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 
-public class File_Manage_Main {
-    public static void main(String[] args) {
-        //File mfile = new File("C:\\Users\\oonja\\Desktop\\File_Management_System\\File_Management\\src\\test.txt");
+public class File_info{
+    public static void file_info(String p) {
+        //File mfile = new File(getAbsoluteFile());
         BasicFileAttributes attrb = null;
-        String p;
-        Path path = Paths.get("C:\\Users\\oonja\\Desktop\\File_Management_System\\File_Management\\src\\test.txt");
-
+        Path path = Paths.get(p);
         try {
             attrb = Files.readAttributes(path, BasicFileAttributes.class);
 
@@ -30,7 +28,7 @@ public class File_Manage_Main {
             System.out.printf("파일 입니까?         %s \n", attrb.isRegularFile());
             System.out.printf("심볼릭 링크 입니까?    %s \n", attrb.isSymbolicLink());
             System.out.printf("Other?             %s \n", attrb.isOther());
-            System.out.println();
+
 
             ///////////////////////
             // 각 개별 속성 가져오기
@@ -41,11 +39,11 @@ public class File_Manage_Main {
             System.out.printf("파일 크기                   : %d \n", size); // 단위는 바이트
 
             // 파일 생성 날짜
-            FileTime creationTime = (FileTime)Files.getAttribute(path, "basic:creationTime", NOFOLLOW_LINKS);
+            FileTime creationTime = (FileTime) Files.getAttribute(path, "basic:creationTime", NOFOLLOW_LINKS);
             System.out.printf("파일 생성 날짜            : %s \n", creationTime);
 
             // 파일 마지막 읽은 날짜
-            FileTime lastAccessTime = (FileTime)Files.getAttribute(path, "basic:lastAccessTime", NOFOLLOW_LINKS);
+            FileTime lastAccessTime = (FileTime) Files.getAttribute(path, "basic:lastAccessTime", NOFOLLOW_LINKS);
             System.out.printf("파일 마지막 읽은 날짜  : %s \n", lastAccessTime);
 
             // 파일 마지막 수정일
