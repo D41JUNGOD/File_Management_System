@@ -11,10 +11,10 @@ public class File_show{
             File file=files[i];
 
             if(file.isFile()){
-                System.out.println("[File]"+file.getCanonicalPath());
+                System.out.println("[파일] "+file.getCanonicalPath());
             }
             else if(file.isDirectory()){
-                System.out.println("[Directory]"+file.getCanonicalPath());
+                System.out.println("[디렉토리] "+file.getCanonicalPath());
                 try{
                     file_show(file.getCanonicalPath());
                     }catch(Exception e){
