@@ -14,7 +14,7 @@ public class File_lock {
     File_lock() {
     }
 
-    public void encrypt(String password, File source, File dest) throws Exception {
+    private void encrypt(String password, File source, File dest) throws Exception {
         Cipher cipher = Cipher.getInstance(transformation);
         SecretKeySpec key = new SecretKeySpec(password.getBytes(), algorithm);
         cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -47,7 +47,7 @@ public class File_lock {
         }
     }
 
-    public int decrypt(String password, File source, File dest) throws Exception {
+    private int decrypt(String password, File source, File dest) throws Exception {
         String file_pw_str = "";
         int file_pw_int;
         Cipher cipher = Cipher.getInstance(transformation);
@@ -56,25 +56,27 @@ public class File_lock {
         try {
             input = new BufferedInputStream(new FileInputStream(source));
             BufferedReader reader = new BufferedReader(new FileReader(source));
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[16];
             int read = -1;
 
             for(int i=1; i<=16; i++) {
                 file_pw_int = reader.read();
                 file_pw_str += (char)file_pw_int;
             }
-
-            System.out.println(file_pw_str);
+            reader.close();
             if(!file_pw_str.equals(password))
                 return 0;
             output = new BufferedOutputStream(new FileOutputStream(dest));
             SecretKeySpec key = new SecretKeySpec(password.getBytes(), algorithm);
             cipher.init(Cipher.DECRYPT_MODE, key);
+
+            int ct = 0;
             while ((read = input.read(buffer)) != -1) {
-                output.write(cipher.update(buffer, 0, read));
+                if(ct != 0)
+                    output.write(cipher.update(buffer, 0, read));
+                ct+=1;
             }
             output.write(cipher.doFinal());
-
         } finally {
             if (output != null) {
                 try {
@@ -89,14 +91,15 @@ public class File_lock {
                 }
             }
         }
+        source.delete();
         return 1;
     }
-    public void encrypt_file(String password,String path) throws Exception{
+    void encrypt_file(String password,String path) throws Exception{
         File_lock cipher = new File_lock();
         cipher.encrypt(password,new File(path),new File(path+".lock"));
     }
 
-    public int decrypt_file(String password,String path) throws Exception{
+    int decrypt_file(String password,String path) throws Exception{
         File_lock cipher = new File_lock();
         if(cipher.decrypt(password,new File(path),new File(path.substring(0,path.length()-5))) == 0)
             return 0;
