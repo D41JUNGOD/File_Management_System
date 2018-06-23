@@ -101,8 +101,8 @@ public class File_Manage_Main{
                     }
                     fs.setPassword(password);
 
-                    File_lock fl = new File_lock(fs.getPassword());
-                    fl.encrypt(fs.getPassword(),new File(fs.getPath()),new File(fs.getPath()+".lock"));
+                    File_lock fl = new File_lock();
+                    fl.encrypt_file(fs.getPassword(),fs.getPath());
                     System.out.println("파일 잠금이 성공적으로 되었습니다.");
                 }
             }
@@ -113,7 +113,7 @@ public class File_Manage_Main{
                     fs.setPassword(password);
 
                     File_lock fl = new File_lock();
-                    if(fl.decrypt(fs.getPassword(),new File(fs.getPath()),new File(fs.getPath()))==0) {
+                    if(fl.decrypt_file(fs.getPassword(),fs.getPath()) == 0) {
                         System.out.println("비밀번호가 올바르지 않습니다.");
                     }
                     else{
